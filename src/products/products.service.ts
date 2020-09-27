@@ -5,35 +5,19 @@ import { Repository, DeleteResult, UpdateResult } from 'typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
-import { ProductDetailEntity } from './entities/product-details.entity';
+import { ProductDetailsEntity } from './entities/product-details.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
-    @InjectRepository(ProductDetailEntity)
-    private readonly productDetailsRepository: Repository<ProductDetailEntity>,
   ) {}
   // ↑productRepositoryはproducts.moduleに登録されていないと使えない
 
   async create(product: CreateProductDTO): Promise<Product> {
-    const productDetails = await this.productDetailsRepository.save({
-      dimension: product.dimension,
-      partNumber: product.partNumber,
-      weight: product.weight,
-      manufacture: product.manufacturer,
-      origin: product.origin,
-    });
-    const newProduct = new ProductEntity();
-    newProduct.name = product.name;
-    newProduct.price = product.price;
-    newProduct.qty = product.qty;
-    newProduct.productDetails = productDetails;
-    await this.productRepository.save(newProduct);
-
-    // return await this.productRepository.save(product);
-    return { ...newProduct, productDetails };
+    const result = await this.productRepository.save(product);
+    return result;
   }
 
   async find(): Promise<Product[]> {

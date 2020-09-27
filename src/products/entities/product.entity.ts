@@ -1,8 +1,12 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ProductDetailEntity } from './product-details.entity';
+import { ProductDetailsEntity } from './product-details.entity';
 
 @Entity({ name: 'products' })
 export class ProductEntity {
+  // constructor(init?: Partial<ProductEntity>) {
+  //   Object.assign(this, init);
+  // }
+
   @PrimaryGeneratedColumn() // autoincrement id
   id: number;
   @Column({ length: 500 })
@@ -12,7 +16,7 @@ export class ProductEntity {
   @Column()
   price: number;
 
-  @OneToOne(type => ProductDetailEntity)
+  @OneToOne(type => ProductDetailsEntity, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
-  productDetails: ProductDetailEntity;
+  productDetails: ProductDetailsEntity;
 }

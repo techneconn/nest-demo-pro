@@ -11,7 +11,10 @@ export class CreateProductDTO {
   @IsNumber()
   readonly price: number;
 
-  // そういうことやる…？
+  productDetails: CreateProductDetailsDTO;
+}
+
+export class CreateProductDetailsDTO {
   @IsNotEmpty()
   @IsString()
   readonly partNumber: string;
