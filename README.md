@@ -60,6 +60,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+
+## migration
+
+```bash
+# assuming docker-compose is aliased as `dc`
+
+# Create migration
+$ dc run --rm api npm run typeorm migration:generate -- -n InitialMigration
+# Run all
+$ dc run --rm api npm run typeorm migration:run
+# One generation down
+$ dc run --rm api npm run typeorm migration:revert
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

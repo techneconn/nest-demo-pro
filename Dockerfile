@@ -21,7 +21,11 @@ RUN apt-get update -qq && apt-get install -qy \
   --no-install-recommends
 # procps... watchに必要
 
+# typeorm cli用
+RUN npm install -g ts-node
+
 RUN npm config list
 RUN npm install
 
+USER node
 CMD ["npm", "run", "start:dev"]
